@@ -10,16 +10,15 @@ dotenv.config();
 
 const httpServer = createServer();
 
-const db = async () => {
-  await dbConnection(process.env.DATABASE_URL as string);
-}
+dbConnection(process.env.DATABASE_URL as string).then((d) => {
+  const messageModel = Message;
+  const messageRepository = new MessageRepository(messageModel);
+  const messageService = new MessageService(messageRepository);
+  
+  socketConfig(httpServer, messageService);
+}).catch((err) => {
+  console.error("Something went wrong");
+});
 
-db();
-
-const messageModel = Message;
-const messageRepository = new MessageRepository(messageModel);
-const messageService = new MessageService(messageRepository);
-
-socketConfig(httpServer, messageService);
 
 httpServer.listen(process.env.PORT || 3333);
