@@ -10,7 +10,11 @@ dotenv.config();
 
 const httpServer = createServer();
 
-dbConnection(process.env.DATABASE_URL as string);
+const db = async () => {
+  await dbConnection(process.env.DATABASE_URL as string);
+}
+
+db();
 
 const messageModel = Message;
 const messageRepository = new MessageRepository(messageModel);
