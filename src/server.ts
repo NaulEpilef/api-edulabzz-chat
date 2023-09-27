@@ -18,4 +18,4 @@ const messageService = new MessageService(messageRepository);
 
 socketConfig(httpServer, messageService);
 
-httpServer.listen(3333);
+httpServer.listen(process.env.PORT || 3333);
