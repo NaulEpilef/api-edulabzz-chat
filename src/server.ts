@@ -16,9 +16,8 @@ dbConnection(process.env.DATABASE_URL as string).then((d) => {
   const messageService = new MessageService(messageRepository);
   
   socketConfig(httpServer, messageService);
+
+  httpServer.listen(process.env.PORT || 3333);
 }).catch((err) => {
   console.error("Something went wrong");
 });
-
-
-httpServer.listen(process.env.PORT || 3333);
